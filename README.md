@@ -24,13 +24,12 @@ A free and open-source [Jekyll](https://jekyllrb.com) theme. Based on Rohan Chan
 
 ## Table of Contents
 
-  - [Usage](#usage)
-  - [Structure](#structure)
-  - [Configure Type on Strap](#configure-type-on-strap)
-  - [Other Layouts](#other-layouts)
-  - [Feature pages](#feature-pages)
-  - [Advanced](#advanced)
-  - [License](#license)
+- [Usage](#usage)
+- [Structure](#structure)
+- [Configure Type on Strap 🛠](#configure-type-on-strap-)
+- [Feature pages and layouts](#feature-pages-and-layouts)
+- [Advanced](#advanced)
+- [License](#license)
 
 ## Usage
 
@@ -53,22 +52,22 @@ Here are the main files of the template
 
 ```bash
 Type-on-Strap
-├── _includes	               # theme includes
-├── _layouts                   # theme layouts (see below for details)
-├── _portfolio	               # collection of article to be populated in the portfolio page
+├── _includes	               # Theme includes
+├── _layouts                   # Theme layouts (see below for details)
+├── _portfolio	               # Collection of articles to be populated in the portfolio page
 ├── _posts                     # Blog posts
 ├── _sass                      # Sass partials 
 ├── assets
-|  ├── js	               # theme javascript, Katex, jquery, bootstrap, jekyll search, 
-|  ├── css                     # isolated Bootstrap, font-awesome, katex and main css
-|  ├── fonts		       # Font-Awesome, and other fonts
-|  └── img		       # Images used for the template
+|  ├── js	                   # JS compiled for distribution 
+|  ├── css                     # CSS compiled for distribution
+|  ├── fonts		           # Font-Awesome, and other fonts
+|  └── img		               # Images used for the template
 ├── pages
-|   ├── 404.md		       # To be displayed when url is wrong
+|   ├── 404.md		           # To be displayed when url is wrong
 |   ├── about.md               # About example page
 |   ├── gallery.md             # Gallery page for your photos
 |   ├── portfolio.md	       # Portfolio page for your projects
-|   ├── search.html	       # Search page
+|   ├── search.html	           # Search page
 |   └── tags.md                # The tag page
 ├── _config.yml                # sample configuration
 ├── _data.yml
@@ -114,9 +113,9 @@ Change these variables in `_config.yml`:
 
 ```yml
 title: My Jekyll Blog                 # Name of website
-avatar: assets/img/triangle.png       # Path of avatar image, to be displayed in the theme's header
+avatar: assets/img/avatar.png         # Path of avatar image, to be displayed in the theme's header
 description: My blog posts            # Short description, primarily used by search engines
-favicon: assets/favicon.ico           # Icon displayed in the tab
+favicon: assets/img/favicon.ico       # Icon displayed in the tab
 ```
 
 You can also customize the seo tags default option following the jekyll-seo-tag plugin [documentation](http://jekyll.github.io/jekyll-seo-tag/advanced-usage/).
@@ -129,7 +128,7 @@ Customize your site header/footer with these variables in `_config.yml`:
 
 ```yml
 header_text: Welcome to my Jekyll blog
-header_feature_image: assets/img/sample3.png
+header_feature_image: assets/img/featured/webp/triangular.webp
 footer_text: Copyright 2017
 ```
 
@@ -325,7 +324,7 @@ Use it in any markdown file. There are two fields in the include you need to loo
 
 #### Code highlight
 
-Like all CSS variables in the theme, you can edit the color of the code highlight in _sass > base > _variables.scss.
+Like all CSS variables in the theme, you can edit the color of the code highlight in `_sass > base > _variables.scss`.
 The code highlighting works with [base16](https://github.com/chriskempson/base16-html-previews/tree/master/css) you can find existing example 
 of your favourite highlight color scheme on this format.
 
@@ -432,7 +431,7 @@ It will take all of the picture under that directory. Then use the `include` to 
 ---
 layout: page
 title: Gallery
-gallery: "assets/img/pexels"
+gallery: "assets/img/featured"
 ---
 
 {% include gallery.html gallery_path=page.gallery %}
@@ -504,26 +503,30 @@ Before you need to have *node* and `npm` installed:
 Then you need to install [`gulp-cli`](https://gulpjs.com/) and its dependencies:
 
 ```bash
-cd assets/
 sudo npm install gulp-cli -g
 npm install
 ```
 
 #### Minimizing and optimizing: css, js and images
 
-You can run the default task that will compress the js, css and images and create the thumbnails for the supported image
-formats:
+You can run the default task that will compress the js, css, resize and compress images and create thumbnails for the featured dir.
 
 ```bash
-cd assets/
 gulp default
-gulp thumbnails-all # to create all of the images thumbnails
-gulp thumbnails     # to create thumbnails for the feature-img/ only
+gulp post -n "Title"    # create a empty post with today's date and the parsed title
+gulp js    # merge and uglify js src files
+gulp bootstrap    # isolate and uglify bootstrap css
+gulp avatar   # resize avatar to 512x and compress
+gulp portfolio   # resize portfolio to 512x and compress
+gulp featured   # resize featured to 1920x and compress
+gulp thumbs    # generate thumbnails of the featured imgs
+gulp webp   # generate webps copies of the featured imgs
+
 # tip: run a git status to see the changes
 git status
 ```
 
-You can find more about the gulp tasks in the [gulpfile.js](assets/gulpfile.js).
+You can find more about the gulp tasks in the [gulpfile.js](gulpfile.js).
 
 #### Create a post
 
